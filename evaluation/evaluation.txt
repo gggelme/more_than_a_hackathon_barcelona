@@ -1,0 +1,15 @@
+Lo que hace es tomar los CSV del baseline y compararlo ocn los 5 minutos publicos del ground truht. Devolviendo las metricas
+
+smooth125 (±5 s)	0,58	0,42 🥇	16	18,5 s
+smooth50 (±2 s)	0,62	0,33	26	10,8 s
+smooth25 (±1 s)	0,62	0,29	36	7,6 s
+raw (sin suavizar)	0,60	0,04	131	2,0 s
+
+Mayor suavidad implica pero desempeño en posiciones cortas
+
+Geenra 4 archivos (en realidad uno por entrega de modelo)
+- scoreboard.csv: tabla resumen del rendimiento por entrega(modelo)
+
+- reportes nivel individual: Se sobreescriben en cada corrida
+    -metricas: todas las metricas de esa entrega. Matrices de confusion, f1 para cada umbral. Uno con entrega
+    - Transiciones: cada fila es un cambio de posesion.

@@ -31,8 +31,11 @@ evaluation/scoreboard.csv
 # into actually exists in a fresh clone. Everything they put in it stays out of git.
 data/*
 !data/README.md
+# Our own notes about the data. Listed by name on purpose: the tracking itself is also .txt.
+!data/tipos_archivos.txt
 
 *.mp4
+*.crdownload
 *.gzip
 *.pl3container
 
