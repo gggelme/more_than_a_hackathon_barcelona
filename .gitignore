@@ -36,6 +36,9 @@ data/*
 
 *.mp4
 *.crdownload
+
+# YOLO weights: downloaded automatically into models/ on first use, no need to version them
+models/
 *.gzip
 *.pl3container
 
