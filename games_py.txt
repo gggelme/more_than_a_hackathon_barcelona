@@ -1,0 +1,29 @@
+Games .py es un archivo de configuracion del proyecto (basado para el tactico nomas)
+
+"BAR-ATH": {
+    "n_video_frames": 199319,        # frames del video táctico = filas del CSV
+    "fps": 25,
+    "offsets": {1: 1702057, 2: 1702058}, #id frame = frame video + offset para el primer o segundo tiempo
+    "halves": {1: (1713242, 1792708), 2: (1812866, 1892255)}, #primer tiempo y segundo tiepo
+    "kickoff":     {"minute": 7,  "second": 27, "frame": 11},   # saque 1T en el video
+    "kickoff_2nd": {"minute": 75, "second": 49, "frame": 16},   # saque 2T en el video
+    "pitch": (105.3, 68.0),          # medidas reales de la cancha en metros. matriz
+}
+
+En teoria el segundo tiempod el frame no hay correlacion buena con kickoff_2nd (2933 frames tardes) Para
+
+"
+dentro de cada tiempo:
+    detectar el frame del saque inicial
+    todo lo anterior al saque → D
+    desde el saque en adelante → tu modelo (H / A / D)
+"
+
+Las dos camaras: pero todos los datos estan hechos con tactico
+
+claves apra acceder a los datos
+- atd_meta: accede al xml
+- atd_raw: accede al txt
+- video accede al video
+- Homography
+- smart_tagging

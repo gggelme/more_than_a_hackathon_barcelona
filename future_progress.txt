@@ -1,0 +1,16 @@
+tracking yolo pelota real pixel, inferir altura respecto a la proyección
+tiempos muertos (offsides, laterales):
+- coordenada de pelota negativa o fuera del 0,1 implica pelota muerta
+- poco movimiento en general de los jugadores puede implicar una pelota muerta
+- poco movimiento de pelota implica
+
+
+
+offsite: frame inicial (marca D)
+corners: frame 170000 (marca D)
+saque de arco frame 18000 (marca D)
+laterla: frame 19000 (no marca)
+
+
+cosas que veo que anda mal: 
+- 

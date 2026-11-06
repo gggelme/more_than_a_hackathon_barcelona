@@ -242,9 +242,9 @@ if __name__ == '__main__':
     first_half_kickoff = half_video_blocks(GAME)[0][1]     # 11185, first graded frame
 
     # -- what to show ------------------------------------------------------------------------
-    START = 16000     # video frame to start from (minute * 1500 + second * 25)
+    START = first_half_kickoff     # video frame to start from (minute * 1500 + second * 25)
     SECONDS = 420                    # how long to play
-    LABELS = "gt"                   #"gt" or a file in evaluation/results/, e.g. "baseline_smooth50"
+    LABELS = "baseline_raw"                   #"gt" or a file in evaluation/results/, e.g. "baseline_smooth50"
     SCALE = 0.75                    # window size relative to 1920x1080
     OUT = None                      # e.g. "clip.mp4" to write a file instead of a window
 

@@ -1,0 +1,61 @@
+===== atd.txt es Automatic tracking Data.========
+Pod cada linea frame con la posicion de todos los jugadores y la pelota
+
+11186 : NaN,NaN,NaN ; 0.37026,0.74171,0.525 ; 0.38505,0.24620,0.455 ; ... : NaN,NaN,NaN
+frame   └─ slot 1 ─┘   └──── slot 2 ──────┘   └──── slot 3 ──────┘   ...   └ pelota ┘
+
+
+Hay 3 separadores:
+- ; separa un jugador del siguiente
+- , separa los tres valores de cada jugador posx, posy, vel
+- : separa en indice frame : jugadores : pelota ()
+
+Los slot vienen definidos en _atd.xml. y siempre se respeta el orden del slot y cada slot siempre pertenece al mismo equipo
+- (1-24) barcelona
+- (25-46) atletico bilbao
+Puede cambiar que el slot tenga datos o no (tiene Nan si está vacio).
+Los slots no son 1 a 1 con los jugadores, cambian de jugadores, a veces pierden la nocion. Es un tracker de ia quien lo automatizo, no está corregido por un humano
+
+===== atd.xml ========
+
+- tiene datos generales del video (fps, medida de la cancha)
+- Equipos: informacion de hacia donde ataca cada equipo
+    - Cambia la direccion de ataque segun el tiempo (x=1 es izquierda a derecha)
+        <Team id="MET_user_team_o4Hossvb8M"> <Name>Barcelona</Name>
+            attack_direction_first_half = left_to_right
+        <Team id="MET_user_team_x7C4FFX2HF"> <Name>Atletic Club</Name>
+            attack_direction_first_half = right_to_left
+- Jugadores: Slots de 1 a 24 de barcelona y 25 a 46 del athletico. 
+    Los arqueros tienen un tipo de dato position_type Goalkeeper, util para encontrar saques de arco etc
+    Es decir, con los arqueros hay correspondencia uno a uno con slots y posicion.
+
+
+
+- Formato del txt: Como leer cada lineal del txt anterior. Hay algo raro, dice el XML kph(km/h) pero DATA.md dice que esta en velocidad por segundo (error del XML que creo que habria que cambiar)
+
+===== Homography=====
+
+frame,h00,h01,h02,h10,h11,h12,h20,h21,h22,reprojection_error,valid
+El tracking registra posiciones y no siempre muestra toda la cancha
+Matriz 3x3 que traduce un punto de la cancha (normalizado del tracker) a un pixel de video (uv)
+- Una matriz por frame
+- Cada matriz tiene su reprojection_error (aparentemente muy bajo)
+- la camara se mueve muy poco en la vista amplia
+
+
+====== SmartTaging==========
+Es un etiquetado de 638 etiquetas de lo que esta pasando el partido indicando
+- Que tipo de jugada es
+- Que equipó es
+- Entre que segundos ocurre
+
+Los eventos se superponen
+
+tienen errores y no coinciden exactamente con el groud truth
+
+Las etiquetas se resumen en:
+- Fases de juego: si es ataque, defensa, quien ataca, quien defiende. Se puede extraer H o a
+- SET PIECES: lateral, corner, tiro libre, saque de arco, saque del medio. Señal de pelota muestra
+- Zona: ubicacion de pelota. COntexto
+
+Es una "evidencia ruidosa"
