@@ -130,8 +130,8 @@ def summarise(labels, states, changed_vs_nearest, compared, fps):
 
 if __name__ == "__main__":
     # -- what to run -------------------------------------------------------------------------
-    START = None                    # None = whole match; or a video frame (minute*1500 + second*25)
-    SECONDS = None                  # None = to the end; frames outside the range are X
+    START = 11185                    # None = whole match; or a video frame (minute*1500 + second*25)
+    SECONDS = 1000                  # None = to the end; frames outside the range are X
     NO_BALL = "keep"                # "keep": no ATD ball keeps the team; "D": becomes D (baseline)
 
     # -- the classifier (metres, m/s), same as src/visualizing_possession.py ----------------

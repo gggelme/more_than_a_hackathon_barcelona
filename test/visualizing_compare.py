@@ -222,8 +222,8 @@ if __name__ == '__main__':
     # -- what to show ------------------------------------------------------------------------
     START = first_half_kickoff      # video frame to start from (minute * 1500 + second * 25)
     SECONDS = 500                    # how long
-    LEFT = "gt"      # "gt" or a file in evaluation/results/ (without .csv)
-    RIGHT = "vector_tracking_clasification"
+    LEFT = "vector_tracking_clasification"      # "gt" or a file in evaluation/results/ (without .csv)
+    RIGHT = "vector_tracking_deadball"
     SHOW_GT = True                  # add the public ground truth as a third timeline row
     SHOW_TRACKING = True            # draw the ATD players and ball on the video
     PANEL_SCALE = 0.5               # each panel relative to 1920x1080 (0.5 -> 960x540)
