@@ -20,6 +20,7 @@ import time
 import cv2
 import numpy as np
 from ultralytics import YOLO
+from collections import Counter, deque
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -80,6 +81,9 @@ def run(start, seconds=10, weights="yolo11s.pt", conf=0.1, device=0, config=None
     cap.set(cv2.CAP_PROP_POS_FRAMES, start)
     paused = False
     frame = start
+
+    VOTING_WINDOW = 15
+    prediction_history = deque(maxlen=VOTING_WINDOW)
     while frame < stop:
         if not paused:
             ok, image = cap.read()
@@ -103,7 +107,20 @@ def run(start, seconds=10, weights="yolo11s.pt", conf=0.1, device=0, config=None
                 chosen = choose(fits)
                 state = classify(fits, chosen, config)
 
-            draw_frame(image, frame, camera, x_m, y_m, fits, chosen, region, state, config.z_max,
+            prediction_history.append(state if state in ("ground", "air") else None)
+
+            valid_predictions = [
+                prediction for prediction in prediction_history
+                if prediction is not None
+            ]
+
+            smoothed_state = (
+                Counter(valid_predictions).most_common(1)[0][0]
+                if valid_predictions
+                else state
+            )
+
+            draw_frame(image, frame, camera, x_m, y_m, fits, chosen, region, smoothed_state, config.z_max,
                        fps, 1000 * (time.time() - began))
             shown = cv2.resize(image, None, fx=scale, fy=scale)
             frame += 1
@@ -126,10 +143,10 @@ if __name__ == '__main__':
     START = first_half_kickoff      # video frame to start from (minute * 1500 + second * 25)
     SECONDS = 5000                    # how long
     WEIGHTS = "yolo11s.pt"          # COCO model, as in visualizing_yolo.py
-    CONF = 0.02                     # minimum YOLO confidence
+    CONF = 0.01                     # minimum YOLO confidence
     CONFIG = HeightConfig(          # thresholds in metres (see tracking_height/ball_height.py)
         max_residual_m=1.5,         # boxes farther than this from the vertical are not used
-        ground_max=0.8,             # z up to this is "ground"
+        ground_max=2.,             # z up to this is "ground"
     )
     SCALE = 0.75                    # window size relative to 1920x1080
     MAX_IMGSZ = 960                # largest YOLO input; 960 or 832 if the GPU runs out of memory
